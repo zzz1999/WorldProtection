@@ -1,0 +1,9 @@
+name: WorldProtection
+main: net.mcbbs.zzz1999.WorldProtection
+author: zzz
+api: ["1.0.0"]
+version: 1.0.0
+permissions:
+ WorldProtection.command.wp:
+  default: op
+  description: "世界保护主要权限"
