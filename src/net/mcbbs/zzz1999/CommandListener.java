@@ -17,13 +17,13 @@ public class CommandListener extends Command {
         this.plugin=plugin;
         this.commandParameters.clear();
         this.commandParameters.put("default",new CommandParameter[]{
-                new CommandParameter("world | admin",CommandParameter.ARG_TYPE_RAW_TEXT,false),
-                new CommandParameter("add | remove",CommandParameter.ARG_TYPE_RAW_TEXT,false),
+                new CommandParameter("world | admin",new String[]{"world","admin"}),
+                new CommandParameter("add | remove",new String[]{"add","remove"}),
                 new CommandParameter("target",CommandParameter.ARG_TYPE_STRING,false),
         });
 
         this.commandParameters.put("help",new CommandParameter[]{
-                new CommandParameter("help",true),
+                new CommandParameter("help",new String[]{"help"}),
         });
 
 
