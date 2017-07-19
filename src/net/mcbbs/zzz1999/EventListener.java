@@ -11,9 +11,13 @@ import cn.nukkit.event.block.BlockPlaceEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.event.entity.EntityExplosionPrimeEvent;
 import cn.nukkit.event.entity.ExplosionPrimeEvent;
+import cn.nukkit.event.player.PlayerAnimationEvent;
+import cn.nukkit.event.server.DataPacketReceiveEvent;
+import cn.nukkit.network.protocol.DataPacket;
+import cn.nukkit.network.protocol.PlayerActionPacket;
 import cn.nukkit.plugin.PluginBase;
 
-public class EventListener extends PluginBase implements Listener {
+public class EventListener implements Listener {
     private WorldProtection plugin;
 
     EventListener(WorldProtection plugin){
@@ -47,6 +51,18 @@ public class EventListener extends PluginBase implements Listener {
     public void HitOther(EntityDamageEvent event) {
         if (plugin.isProtectWorld(event.getEntity().getLevel().getFolderName()) && !plugin.isAdmin(event.getEntity().getName())){
             this.ignoreEvent(event,(Player)event.getEntity());
+        }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
+    public void onPlayerBreak(DataPacketReceiveEvent event){
+        DataPacket pk = event.getPacket();
+        if(pk instanceof PlayerActionPacket){
+            if(((PlayerActionPacket) pk).action == PlayerActionPacket.ACTION_START_BREAK){
+                if(plugin.isProtectWorld(event.getPlayer().getLevel().getFolderName())){
+                    pk.clean();
+                }
+            }
         }
     }
 
