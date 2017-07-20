@@ -4,6 +4,7 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.TextFormat;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,9 @@ public class CommandListener extends Command {
                 new CommandParameter("world | admin",new String[]{"world","admin"}),
                 new CommandParameter("add | remove",new String[]{"add","remove"}),
                 new CommandParameter("target",CommandParameter.ARG_TYPE_STRING,false),
+        });
+        this.commandParameters.put("list",new CommandParameter[]{
+                new CommandParameter("list",new String[]{"list"}),
         });
 
         this.commandParameters.put("help",new CommandParameter[]{
@@ -109,6 +113,18 @@ public class CommandListener extends Command {
             }
             return true;
 
+        }else if (args.length==1){
+            sender.sendMessage(TextFormat.GOLD+"受保护的世界列表:");
+            ArrayList<String> WorldList = (ArrayList<String>)this.plugin.config.get("World");
+            for(String wl : WorldList){
+                sender.sendMessage(TextFormat.BLUE+" -"+wl);
+            }
+            sender.sendMessage(TextFormat.GOLD+"世界管理员列表:");
+            ArrayList<String> AdminList = (ArrayList<String>)this.plugin.config.get("Admin");
+            for(String al: AdminList){
+                sender.sendMessage(TextFormat.BLUE+" -"+al);
+            }
+            return true;
         }else{
             sender.sendMessage("用法: "+this.getUsage());
             return true;

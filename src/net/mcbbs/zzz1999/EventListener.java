@@ -16,6 +16,7 @@ import cn.nukkit.event.server.DataPacketReceiveEvent;
 import cn.nukkit.network.protocol.DataPacket;
 import cn.nukkit.network.protocol.PlayerActionPacket;
 import cn.nukkit.plugin.PluginBase;
+import cn.nukkit.utils.TextFormat;
 
 public class EventListener implements Listener {
     private WorldProtection plugin;
@@ -49,8 +50,8 @@ public class EventListener implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
     public void HitOther(EntityDamageEvent event) {
-        if (plugin.isProtectWorld(event.getEntity().getLevel().getFolderName()) && !plugin.isAdmin(event.getEntity().getName())){
-            this.ignoreEvent(event,(Player)event.getEntity());
+        if (plugin.isProtectWorld(event.getEntity().getLevel().getFolderName())){
+            this.ignoreEvent(event);
         }
     }
 
@@ -70,7 +71,7 @@ public class EventListener implements Listener {
 
     private void ignoreEvent(Cancellable event , Player player){
         event.setCancelled();
-        player.sendPopup("[WorldProtection] 这个世界被保护了");
+        player.sendPopup(TextFormat.RED+"[WorldProtection] 这个世界被保护了");
     }
     private void ignoreEvent(Cancellable event){
         event.setCancelled();

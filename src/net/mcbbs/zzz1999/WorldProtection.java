@@ -26,11 +26,11 @@ public class WorldProtection extends PluginBase implements Listener {
         this.getServer().getCommandMap().register("wp", new CommandListener(this));
         this.getServer().getPluginManager().registerEvents(new EventListener(this),this);
     }
-    @SuppressWarnings({"unchecked","deprecation"})
+    @SuppressWarnings("unchecked")
     boolean isProtectWorld(String world){
         return ((ArrayList<String>) this.config.get("World")).contains(world);
     }
-    @SuppressWarnings({"unchecked","deprecation"})
+    @SuppressWarnings("unchecked")
     boolean isAdmin(String name){
         return ((ArrayList<String>) this.config.get("Admin")).contains(name);
     }
