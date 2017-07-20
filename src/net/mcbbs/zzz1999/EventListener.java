@@ -6,8 +6,7 @@ import cn.nukkit.event.Cancellable;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.EventPriority;
 import cn.nukkit.event.Listener;
-import cn.nukkit.event.block.BlockBreakEvent;
-import cn.nukkit.event.block.BlockPlaceEvent;
+import cn.nukkit.event.block.*;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.event.entity.EntityExplosionPrimeEvent;
 import cn.nukkit.event.entity.ExplosionPrimeEvent;
@@ -66,6 +65,33 @@ public class EventListener implements Listener {
             }
         }
     }
+
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
+    public void onIgnite(BlockIgniteEvent event){
+        if(plugin.isProtectWorld(event.getSource().getLevel().getFolderName())){
+            this.ignoreEvent(event);
+        }
+    }
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
+    public void onWTF(ItemFrameDropItemEvent event){
+        if (plugin.isProtectWorld(event.getPlayer().getLevel().getFolderName())){
+            this.ignoreEvent(event);
+        }
+    }
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
+    public void onLeavesDecay(LeavesDecayEvent event){
+        if(plugin.isProtectWorld(event.getBlock().getLevel().getFolderName())){
+            ignoreEvent(event);
+        }
+    }
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
+    public void onBlockBurn(BlockBurnEvent event){
+        if(plugin.isProtectWorld(event.getBlock().getLevel().getFolderName())){
+            ignoreEvent(event);
+        }
+    }
+
+
 
 
 
