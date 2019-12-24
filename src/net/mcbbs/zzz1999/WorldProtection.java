@@ -2,9 +2,9 @@ package net.mcbbs.zzz1999;
 
 
 import cn.nukkit.event.Listener;
-
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.ConfigSection;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,27 +12,26 @@ import java.util.LinkedHashMap;
 
 
 public class WorldProtection extends PluginBase implements Listener {
-    Config config;
+    static Config config;
 
     @Override
-    @SuppressWarnings({"unchecked","deprecation"})
-    public void onEnable(){
-        this.getServer().getPluginManager().registerEvents(this,this);
+    public void onEnable() {
+        this.getServer().getPluginManager().registerEvents(this, this);
 
-        this.config = new Config(new File(this.getDataFolder(), "Config.yml"), Config.YAML,new LinkedHashMap<String, Object>(){{
-            put("World",new ArrayList<String>());
-            put("Admin",new ArrayList<String>());
-        }});
-        this.getServer().getCommandMap().register("wp", new CommandListener(this));
-        this.getServer().getPluginManager().registerEvents(new EventListener(this),this);
+        config = new Config(new File(this.getDataFolder(), "Config.yml"), Config.YAML, new ConfigSection(new LinkedHashMap<String, Object>() {{
+            put("World", new ArrayList<String>());
+            put("Admin", new ArrayList<String>());
+        }}));
+        this.getServer().getCommandMap().register("worldprotection", new CommandListener());
+        this.getServer().getPluginManager().registerEvents(new EventListener(this), this);
     }
-    @SuppressWarnings("unchecked")
-    boolean isProtectWorld(String world){
-        return ((ArrayList<String>) this.config.get("World")).contains(world);
+
+    boolean isProtectWorld(String world) {
+        return config.getStringList("World").contains(world);
     }
-    @SuppressWarnings("unchecked")
-    boolean isAdmin(String name){
-        return ((ArrayList<String>) this.config.get("Admin")).contains(name);
+
+    boolean isAdmin(String name) {
+        return config.getStringList("Admin").contains(name);
     }
 
 }

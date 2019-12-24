@@ -3,7 +3,8 @@ main: net.mcbbs.zzz1999.WorldProtection
 author: zzz
 api: ["1.0.0"]
 version: 1.0.0
+website: "https://www.mcbbs.net/thread-704901-1-1.html"
 permissions:
  WorldProtection.command.wp:
   default: op
-  description: "世界保护主要权限"
+  description: "世界保护主权限"
